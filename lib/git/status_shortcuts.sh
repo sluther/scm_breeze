@@ -214,7 +214,7 @@ theirs(){ _git_resolve_merge_conflict "their" "$@"; }
 # * Execute prerequisite commands if message given, abort if not
 # * Pipe commit message to 'git commit'
 # * Add escaped commit command and unescaped message to bash history.
-git_commit_prompt() (
+git_commit_prompt() {
   local commit_msg
   local saved_commit_msg
   # Use repo-specific commit message file in .git/ directory (follows git's naming convention)
@@ -277,10 +277,10 @@ git_commit_prompt() (
     # Delete saved commit message if commit was successful
     rm -f "$commit_msg_file"
   fi
-)
+}
 
 # Prompt for commit message, then commit all modified and untracked files.
-git_commit_all() (
+git_commit_all() {
   fail_if_not_git_repo || return 1
   changes=$(git status --porcelain | wc -l | tr -d ' ')
   if [ "$changes" -gt 0 ]; then
@@ -292,10 +292,10 @@ git_commit_all() (
   else
     echo "# No changed files to commit."
   fi
-)
+}
 
 # Add paths or expanded args if any given, then commit all staged changes.
-git_add_and_commit() (
+git_add_and_commit() {
   fail_if_not_git_repo || return 1
   git_silent_add_shortcuts "$@"
   changes=$(git diff --cached --numstat | wc -l)
@@ -305,7 +305,7 @@ git_add_and_commit() (
   else
     echo "# No staged changes to commit."
   fi
-)
+}
 
 # Reset last commit and save its message for reuse
 git_reset_last_commit() {
